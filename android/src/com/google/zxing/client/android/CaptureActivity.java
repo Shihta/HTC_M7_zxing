@@ -23,14 +23,14 @@ import com.google.zxing.ResultMetadataType;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.client.android.camera.CameraManager;
 import com.google.zxing.client.android.clipboard.ClipboardInterface;
-import com.google.zxing.client.android.history.HistoryActivity;
-import com.google.zxing.client.android.history.HistoryItem;
-import com.google.zxing.client.android.history.HistoryManager;
+//import com.google.zxing.client.android.history.HistoryActivity;
+//import com.google.zxing.client.android.history.HistoryItem;
+//import com.google.zxing.client.android.history.HistoryManager;
 import com.google.zxing.client.android.result.ResultButtonListener;
 import com.google.zxing.client.android.result.ResultHandler;
 import com.google.zxing.client.android.result.ResultHandlerFactory;
-import com.google.zxing.client.android.result.supplement.SupplementalInfoRetriever;
-import com.google.zxing.client.android.share.ShareActivity;
+//import com.google.zxing.client.android.result.supplement.SupplementalInfoRetriever;
+//import com.google.zxing.client.android.share.ShareActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -110,10 +110,10 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   private Collection<BarcodeFormat> decodeFormats;
   private Map<DecodeHintType,?> decodeHints;
   private String characterSet;
-  private HistoryManager historyManager;
-  private InactivityTimer inactivityTimer;
+//  private HistoryManager historyManager;
+//  private InactivityTimer inactivityTimer;
   private BeepManager beepManager;
-  private AmbientLightManager ambientLightManager;
+//  private AmbientLightManager ambientLightManager;
 
   ViewfinderView getViewfinderView() {
     return viewfinderView;
@@ -136,11 +136,11 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     setContentView(R.layout.capture);
 
     hasSurface = false;
-    historyManager = new HistoryManager(this);
-    historyManager.trimHistory();
-    inactivityTimer = new InactivityTimer(this);
+//    historyManager = new HistoryManager(this);
+//    historyManager.trimHistory();
+//    inactivityTimer = new InactivityTimer(this);
     beepManager = new BeepManager(this);
-    ambientLightManager = new AmbientLightManager(this);
+//    ambientLightManager = new AmbientLightManager(this);
 
     PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
   }
@@ -186,9 +186,9 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     }
 
     beepManager.updatePrefs();
-    ambientLightManager.start(cameraManager);
+//    ambientLightManager.start(cameraManager);
 
-    inactivityTimer.onResume();
+//    inactivityTimer.onResume();
 
     Intent intent = getIntent();
 
@@ -288,8 +288,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       handler.quitSynchronously();
       handler = null;
     }
-    inactivityTimer.onPause();
-    ambientLightManager.stop();
+//    inactivityTimer.onPause();
+//    ambientLightManager.stop();
     beepManager.close();
     cameraManager.closeDriver();
     if (!hasSurface) {
@@ -302,7 +302,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
   @Override
   protected void onDestroy() {
-    inactivityTimer.shutdown();
+//    inactivityTimer.shutdown();
     super.onDestroy();
   }
 
@@ -347,22 +347,22 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     Intent intent = new Intent(Intent.ACTION_VIEW);
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
     switch (item.getItemId()) {
-      case R.id.menu_share:
+      /*case R.id.menu_share:
         intent.setClassName(this, ShareActivity.class.getName());
         startActivity(intent);
         break;
       case R.id.menu_history:
         intent.setClassName(this, HistoryActivity.class.getName());
         startActivityForResult(intent, HISTORY_REQUEST_CODE);
-        break;
+        break;*/
       case R.id.menu_settings:
         intent.setClassName(this, PreferencesActivity.class.getName());
         startActivity(intent);
         break;
-      case R.id.menu_help:
+      /*case R.id.menu_help:
         intent.setClassName(this, HelpActivity.class.getName());
         startActivity(intent);
-        break;
+        break;*/
       default:
         return super.onOptionsItemSelected(item);
     }
@@ -371,7 +371,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-    if (resultCode == RESULT_OK) {
+    /*if (resultCode == RESULT_OK) {
       if (requestCode == HISTORY_REQUEST_CODE) {
         int itemNumber = intent.getIntExtra(Intents.History.ITEM_NUMBER, -1);
         if (itemNumber >= 0) {
@@ -379,7 +379,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
           decodeOrStoreSavedBitmap(null, historyItem.getResult());
         }
       }
-    }
+    }*/
   }
 
   private void decodeOrStoreSavedBitmap(Bitmap bitmap, Result result) {
@@ -427,13 +427,13 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
    * @param barcode   A greyscale bitmap of the camera data which was decoded.
    */
   public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
-    inactivityTimer.onActivity();
+//    inactivityTimer.onActivity();
     lastResult = rawResult;
     ResultHandler resultHandler = ResultHandlerFactory.makeResultHandler(this, rawResult);
 
     boolean fromLiveScan = barcode != null;
     if (fromLiveScan) {
-      historyManager.addHistoryItem(rawResult, resultHandler);
+//      historyManager.addHistoryItem(rawResult, resultHandler);
       // Then not from history, so beep/vibrate and we have an image to draw on
       beepManager.playBeepSoundAndVibrate();
       drawResultPoints(barcode, scaleFactor, rawResult);
@@ -576,13 +576,13 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     TextView supplementTextView = (TextView) findViewById(R.id.contents_supplement_text_view);
     supplementTextView.setText("");
     supplementTextView.setOnClickListener(null);
-    if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
+    /*if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
         PreferencesActivity.KEY_SUPPLEMENTAL, true)) {
       SupplementalInfoRetriever.maybeInvokeRetrieval(supplementTextView,
                                                      resultHandler.getResult(),
                                                      historyManager,
                                                      this);
-    }
+    }*/
 
     int buttonCount = resultHandler.getButtonCount();
     ViewGroup buttonView = (ViewGroup) findViewById(R.id.result_button_view);

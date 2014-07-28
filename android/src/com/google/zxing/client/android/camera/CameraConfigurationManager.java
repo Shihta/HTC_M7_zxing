@@ -96,7 +96,14 @@ final class CameraConfigurationManager {
         CameraConfigurationUtils.setFocusArea(parameters);
         CameraConfigurationUtils.setMetering(parameters);
       }
-
+			String tmp;
+			if ((tmp = parameters.get("scene-mode-values")) != null) {
+				if (tmp.indexOf("text") >= 0) {
+					Log.d(TAG, "scene-mode-values=" + tmp);
+					parameters.set("scene-mode", "text");
+					Log.d(TAG, "scene-mode set ok!");
+				}
+			}
     }
 
     parameters.setPreviewSize(cameraResolution.x, cameraResolution.y);
