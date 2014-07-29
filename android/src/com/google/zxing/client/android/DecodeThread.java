@@ -65,7 +65,7 @@ final class DecodeThread extends Thread {
     if (decodeFormats == null || decodeFormats.isEmpty()) {
       SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
       decodeFormats = EnumSet.noneOf(BarcodeFormat.class);
-      if (prefs.getBoolean(PreferencesActivity.KEY_DECODE_1D_PRODUCT, true)) {
+      /*if (prefs.getBoolean(PreferencesActivity.KEY_DECODE_1D_PRODUCT, true)) {
         decodeFormats.addAll(DecodeFormatManager.PRODUCT_FORMATS);
       }
       if (prefs.getBoolean(PreferencesActivity.KEY_DECODE_1D_INDUSTRIAL, true)) {
@@ -82,7 +82,8 @@ final class DecodeThread extends Thread {
       }
       if (prefs.getBoolean(PreferencesActivity.KEY_DECODE_PDF417, false)) {
         decodeFormats.addAll(DecodeFormatManager.PDF417_FORMATS);
-      }
+      }*/
+      decodeFormats.addAll(DecodeFormatManager.QUANTA_FORMATS);
     }
     hints.put(DecodeHintType.POSSIBLE_FORMATS, decodeFormats);
 

@@ -175,6 +175,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     resetStatusView();
 
     SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
+    android.widget.FrameLayout.LayoutParams params = new android.widget.FrameLayout.LayoutParams(1280, 720);
+    surfaceView.setLayoutParams(params);
     SurfaceHolder surfaceHolder = surfaceView.getHolder();
     if (hasSurface) {
       // The activity was paused but not stopped, so the surface still exists. Therefore
@@ -294,6 +296,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     cameraManager.closeDriver();
     if (!hasSurface) {
       SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
+      android.widget.FrameLayout.LayoutParams params = new android.widget.FrameLayout.LayoutParams(1280, 720);
+      surfaceView.setLayoutParams(params);
       SurfaceHolder surfaceHolder = surfaceView.getHolder();
       surfaceHolder.removeCallback(this);
     }

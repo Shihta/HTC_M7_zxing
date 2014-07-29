@@ -50,8 +50,8 @@ final class CameraConfigurationManager {
     Camera.Parameters parameters = camera.getParameters();
     WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
     Display display = manager.getDefaultDisplay();
-    Point theScreenResolution = new Point();
-    display.getSize(theScreenResolution);
+    Point theScreenResolution = new Point(1280, 720);
+//    display.getSize(theScreenResolution);
     screenResolution = theScreenResolution;
     Log.i(TAG, "Screen resolution: " + screenResolution);
     cameraResolution = CameraConfigurationUtils.findBestPreviewSizeValue(parameters, screenResolution);

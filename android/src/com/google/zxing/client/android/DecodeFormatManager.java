@@ -39,6 +39,7 @@ final class DecodeFormatManager {
   static final Set<BarcodeFormat> DATA_MATRIX_FORMATS = EnumSet.of(BarcodeFormat.DATA_MATRIX);
   static final Set<BarcodeFormat> AZTEC_FORMATS = EnumSet.of(BarcodeFormat.AZTEC);
   static final Set<BarcodeFormat> PDF417_FORMATS = EnumSet.of(BarcodeFormat.PDF_417);
+  static final Set<BarcodeFormat> QUANTA_FORMATS;
   static {
     PRODUCT_FORMATS = EnumSet.of(BarcodeFormat.UPC_A,
                                  BarcodeFormat.UPC_E,
@@ -53,6 +54,7 @@ final class DecodeFormatManager {
                                     BarcodeFormat.CODABAR);
     ONE_D_FORMATS = EnumSet.copyOf(PRODUCT_FORMATS);
     ONE_D_FORMATS.addAll(INDUSTRIAL_FORMATS);
+    QUANTA_FORMATS = EnumSet.of(BarcodeFormat.CODE_39, BarcodeFormat.CODE_128);
   }
   private static final Map<String,Set<BarcodeFormat>> FORMATS_FOR_MODE;
   static {
